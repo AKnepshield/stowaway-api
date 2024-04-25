@@ -1,0 +1,13 @@
+[
+  {
+    "pk": 1,
+    "model": "stowawayapi.record",
+    "fields": {
+      "artist": "Artist",
+      "album": "Album",
+      "year_released": 2024,
+      "image_url": "image.jpg",
+      "user": 1
+    }
+  }
+]
