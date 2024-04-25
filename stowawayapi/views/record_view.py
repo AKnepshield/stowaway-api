@@ -22,7 +22,7 @@ class RecordView(ViewSet):
         record = Record()
         record.artist = request.data["artist"]
         record.album = request.data["album"]
-        record.year_released = request.data["year_released"]
+        record.year_released = request.data["yearReleased"]
         # record.selected_condition = request.data.get("selected_condition")
         # record.image_url = request.data["image_url"]
         record.user = user
@@ -33,6 +33,16 @@ class RecordView(ViewSet):
 
             serializer = RecordSerializer(record)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+        except Exception as ex:
+            return Response({"reason": ex.args[0]}, status=status.HTTP_400_BAD_REQUEST)
+
+    def retrieve(self, request, pk=None):
+        try:
+            record = Record.objects.get(pk=pk)
+            record_serializer = RecordSerializer(record)
+            record_data = record_serializer.data
+            return Response(record_data)
+
         except Exception as ex:
             return Response({"reason": ex.args[0]}, status=status.HTTP_400_BAD_REQUEST)
 

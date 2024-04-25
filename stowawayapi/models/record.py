@@ -19,7 +19,7 @@ class Record(models.Model):
     # genres = models.ManyToManyField(
     #     Genre, through="RecordGenre", related_name="records"
     # )
-    # image_url = models.CharField(max_length=255)
+    image_url = models.CharField(max_length=255)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="records")
 
     def clean(self):
