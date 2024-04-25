@@ -1,0 +1,65 @@
+[
+  {
+    "pk": 1,
+    "model": "stowaway.genre",
+    "fields": {
+      "name": "Punk"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "stowaway.genre",
+    "fields": {
+      "name": "Hardcore Punk"
+    }
+  },
+  {
+    "pk": 3,
+    "model": "stowaway.genre",
+    "fields": {
+      "name": "Heavy Metal"
+    }
+  },
+  {
+    "pk": 4,
+    "model": "stowaway.genre",
+    "fields": {
+      "name": "Hip Hop"
+    }
+  },
+  {
+    "pk": 5,
+    "model": "stowaway.genre",
+    "fields": {
+      "name": "Rock"
+    }
+  },
+  {
+    "pk": 6,
+    "model": "stowaway.genre",
+    "fields": {
+      "name": "Synth"
+    }
+  },
+  {
+    "pk": 7,
+    "model": "stowaway.genre",
+    "fields": {
+      "name": "Jazz"
+    }
+  },
+  {
+    "pk": 8,
+    "model": "stowaway.genre",
+    "fields": {
+      "name": "Reggae"
+    }
+  },
+  {
+    "pk": 9,
+    "model": "stowaway.genre",
+    "fields": {
+      "name": "Country"
+    }
+  }
+]
