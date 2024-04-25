@@ -1,0 +1,22 @@
+[
+  {
+    "pk": "1",
+    "label": "Poor"
+  },
+  {
+    "pk": "2",
+    "label": "Fair"
+  },
+  {
+    "pk": "3",
+    "label": "Good"
+  },
+  {
+    "pk": "4",
+    "label": "Very Good"
+  },
+  {
+    "pk": "5",
+    "label": "Near Mint"
+  }
+]
