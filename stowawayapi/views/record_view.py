@@ -23,7 +23,7 @@ class RecordView(ViewSet):
         record.artist = request.data["artist"]
         record.album = request.data["album"]
         record.year_released = request.data["yearReleased"]
-        # record.selected_condition = request.data.get("selected_condition")
+        record.condition = request.data["condition"]
         # record.image_url = request.data["image_url"]
         record.user = user
 
@@ -114,17 +114,20 @@ class RecordGenreSerializer(serializers.ModelSerializer):
 
 
 class RecordSerializer(serializers.ModelSerializer):
-    selected_condition = (
-        ("POOR", "Poor"),
-        ("FAIR", "Fair"),
-        ("GOOD", "Good"),
-        ("VERY_GOOD", "Very Good"),
-        ("NEAR_MINT", "Near Mint"),
-    )
+
     user = UserRecordSerializer(many=False)
     artist = serializers.CharField()
     album = serializers.CharField()
     yearReleased = serializers.IntegerField(source="year_released")
+    condition = serializers.ChoiceField(
+        choices=(
+            ("POOR", "Poor"),
+            ("FAIR", "Fair"),
+            ("GOOD", "Good"),
+            ("VERY_GOOD", "Very Good"),
+            ("NEAR_MINT", "Near Mint"),
+        )
+    )
 
     class Meta:
         model = Record
@@ -133,5 +136,6 @@ class RecordSerializer(serializers.ModelSerializer):
             "artist",
             "album",
             "yearReleased",
+            "condition",
             "user",
         )
