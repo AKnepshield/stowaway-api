@@ -46,6 +46,26 @@ class RecordView(ViewSet):
         except Exception as ex:
             return Response({"reason": ex.args[0]}, status=status.HTTP_400_BAD_REQUEST)
 
+    def update(self, request, pk=None):
+        try:
+            user = request.auth.user
+
+            record = Record.objects.get(pk=pk)
+
+            record.artist = request.data["artist"]
+            record.album = request.data["album"]
+            record.year_released = request.data["yearReleased"]
+            record.user = user
+            record.save()
+
+        except Record.DoesNotExist:
+            return Response(None, status=status.HTTP_404_NOT_FOUND)
+
+        except Exception as ex:
+            return HttpResponseServerError(ex)
+
+        return Response(None, status=status.HTTP_204_NO_CONTENT)
+
     def list(self, request):
         """Handle GET requests for all items
         Returns:
@@ -57,6 +77,25 @@ class RecordView(ViewSet):
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Exception as ex:
             return HttpResponseServerError(ex)
+
+    def destroy(self, request, pk=None):
+        """Handle DELETE requests for a single item
+
+        Returns:
+            Response -- 200, 404, or 500 status code
+        """
+        try:
+            record = Record.objects.get(pk=pk)
+            record.delete()
+            return Response(None, status=status.HTTP_204_NO_CONTENT)
+
+        except Record.DoesNotExist as ex:
+            return Response({"message": ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
+
+        except Exception as ex:
+            return Response(
+                {"message": ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
 
 class UserRecordSerializer(serializers.ModelSerializer):
