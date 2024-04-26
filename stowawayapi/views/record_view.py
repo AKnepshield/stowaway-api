@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 from stowawayapi.models import Record
 from stowawayapi.models import Genre
+from stowawayapi.models import Condition
 from django.contrib.auth.models import User
 
 
@@ -15,6 +16,7 @@ class RecordView(ViewSet):
             Response -- JSON serialized instance
         """
         user = request.auth.user
+        condition = Condition.objects.get(pk=request.data["condition"])
 
         # genre_ids = request.data.get("genres", [])
         # genres = Genre.objects.filter(pk__in=genre_ids)
@@ -23,8 +25,8 @@ class RecordView(ViewSet):
         record.artist = request.data["artist"]
         record.album = request.data["album"]
         record.year_released = request.data["yearReleased"]
-        record.condition = request.data["condition"]
-        # record.image_url = request.data["image_url"]
+        record.condition = condition
+        record.image_url = request.data["imageUrl"]
         record.user = user
 
         try:
@@ -52,9 +54,12 @@ class RecordView(ViewSet):
 
             record = Record.objects.get(pk=pk)
 
+            condition = Condition.objects.get(pk=pk)
+
             record.artist = request.data["artist"]
             record.album = request.data["album"]
             record.year_released = request.data["yearReleased"]
+            record.condition = condition
             record.user = user
             record.save()
 
@@ -110,24 +115,23 @@ class UserRecordSerializer(serializers.ModelSerializer):
 class RecordGenreSerializer(serializers.ModelSerializer):
     class Meta:
         model = Genre
+        fields = "label"
+
+
+class RecordConditionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Condition
         fields = ("id", "label")
 
 
 class RecordSerializer(serializers.ModelSerializer):
 
     user = UserRecordSerializer(many=False)
-    artist = serializers.CharField()
-    album = serializers.CharField()
+    # artist = serializers.CharField()
+    # album = serializers.CharField()
+    condition = RecordConditionSerializer(many=False)
     yearReleased = serializers.IntegerField(source="year_released")
-    condition = serializers.ChoiceField(
-        choices=(
-            ("POOR", "Poor"),
-            ("FAIR", "Fair"),
-            ("GOOD", "Good"),
-            ("VERY_GOOD", "Very Good"),
-            ("NEAR_MINT", "Near Mint"),
-        )
-    )
+    imageUrl = serializers.CharField(source="image_url")
 
     class Meta:
         model = Record
@@ -136,6 +140,7 @@ class RecordSerializer(serializers.ModelSerializer):
             "artist",
             "album",
             "yearReleased",
+            "imageUrl",
             "condition",
             "user",
         )

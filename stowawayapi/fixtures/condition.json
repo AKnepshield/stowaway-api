@@ -1,22 +1,37 @@
 [
   {
+    "model": "stowawayapi.condition",
     "pk": "1",
-    "label": "Poor"
+    "fields": {
+      "label": "Poor"
+    }
   },
   {
+    "model": "stowawayapi.condition",
     "pk": "2",
-    "label": "Fair"
+    "fields": {
+      "label": "Fair"
+    }
   },
   {
+    "model": "stowawayapi.condition",
     "pk": "3",
-    "label": "Good"
+    "fields": {
+      "label": "Good"
+    }
   },
   {
-    "pk": "4",
-    "label": "Very Good"
-  },
-  {
+    "model": "stowawayapi.condition",
     "pk": "5",
-    "label": "Near Mint"
+    "fields": {
+      "label": "Very Good"
+    }
+  },
+  {
+    "model": "stowawayapi.condition",
+    "pk": "6",
+    "fields": {
+      "label": "Near Mint"
+    }
   }
 ]
