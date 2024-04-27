@@ -1,6 +1,6 @@
 from django.db import models
-from .record import Record
 from .genre import Genre
+from .record import Record
 
 
 class RecordGenre(models.Model):

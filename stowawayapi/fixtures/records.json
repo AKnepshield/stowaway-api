@@ -18,7 +18,7 @@
       "album": "Damaged",
       "year_released": 1981,
       "image_url": "black_flag_damaged.jpg",
-      "user": 1
+      "user": 2
     }
   },
   {
@@ -29,7 +29,7 @@
       "album": "To Pimp a Butterfly",
       "year_released": 2015,
       "image_url": "kendrick_lamar_to_pimp_a_butterfly.jpg",
-      "user": 1
+      "user": 3
     }
   },
   {
@@ -40,7 +40,7 @@
       "album": "Master of Puppets",
       "year_released": 1986,
       "image_url": "metallica_master_of_puppets.jpg",
-      "user": 1
+      "user": 4
     }
   },
   {
@@ -51,7 +51,7 @@
       "album": "Ramones",
       "year_released": 1976,
       "image_url": "ramones_ramones.jpg",
-      "user": 1
+      "user": 5
     }
   },
   {
@@ -62,7 +62,7 @@
       "album": "Out of Step",
       "year_released": 1983,
       "image_url": "minor_threat_out_of_step.jpg",
-      "user": 1
+      "user": 6
     }
   },
   {
@@ -73,7 +73,7 @@
       "album": "Illmatic",
       "year_released": 1994,
       "image_url": "nas_illmatic.jpg",
-      "user": 1
+      "user": 5
     }
   },
   {
@@ -84,7 +84,7 @@
       "album": "The Number of the Beast",
       "year_released": 1982,
       "image_url": "iron_maiden_the_number_of_the_beast.jpg",
-      "user": 1
+      "user": 4
     }
   },
   {
@@ -95,7 +95,7 @@
       "album": "Never Mind the Bollocks, Here's the Sex Pistols",
       "year_released": 1977,
       "image_url": "sex_pistols_never_mind_the_bollocks.jpg",
-      "user": 1
+      "user": 3
     }
   },
   {
@@ -106,7 +106,7 @@
       "album": "Bad Brains",
       "year_released": 1982,
       "image_url": "bad_brains_bad_brains.jpg",
-      "user": 1
+      "user": 2
     }
   }
 ]

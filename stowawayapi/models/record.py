@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.forms import ValidationError
-from stowawayapi.models.genre import Genre
 from stowawayapi.models.condition import Condition
 
 
@@ -13,8 +12,11 @@ class Record(models.Model):
     condition = models.ForeignKey(Condition, on_delete=models.SET_NULL, null=True)
     image_url = models.CharField(max_length=255)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="records")
+    genres = models.ManyToManyField(
+        "Genre", through="RecordGenre", related_name="records"
+    )
 
-    def clean(self):
-        super().clean()
-        if not self.genres.exists():
-            raise ValidationError("Please choose at least 1 genre")
+    # def clean(self):
+    #     super().clean()
+    #     if not self.genres.exists():
+    #         raise ValidationError("Please choose at least 1 genre")

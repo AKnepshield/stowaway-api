@@ -17,6 +17,10 @@ class RecordView(ViewSet):
         """
         user = request.auth.user
         condition = Condition.objects.get(pk=request.data["condition"])
+        genres = []
+        for genre_id in request.data["categories"]:
+            genre = Genre.objects.get(pk=genre_id)
+            genres.append(genre)
 
         # genre_ids = request.data.get("genres", [])
         # genres = Genre.objects.filter(pk__in=genre_ids)
@@ -31,7 +35,7 @@ class RecordView(ViewSet):
 
         try:
             record.save()
-            # record.genres.set(genres)
+            record.genres.set(genres)
 
             serializer = RecordSerializer(record)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -51,10 +55,12 @@ class RecordView(ViewSet):
     def update(self, request, pk=None):
         try:
             user = request.auth.user
-
             record = Record.objects.get(pk=pk)
-
             condition = Condition.objects.get(pk=pk)
+            genres = []
+            for genre_id in request.data["genres"]:
+                genre = Genre.objects.get(pk=genre_id)
+                genres.append(genre)
 
             record.artist = request.data["artist"]
             record.album = request.data["album"]
@@ -62,6 +68,7 @@ class RecordView(ViewSet):
             record.condition = condition
             record.user = user
             record.save()
+            record.genres.set(genre)
 
         except Record.DoesNotExist:
             return Response(None, status=status.HTTP_404_NOT_FOUND)
@@ -115,7 +122,7 @@ class UserRecordSerializer(serializers.ModelSerializer):
 class RecordGenreSerializer(serializers.ModelSerializer):
     class Meta:
         model = Genre
-        fields = "label"
+        fields = "name"
 
 
 class RecordConditionSerializer(serializers.ModelSerializer):
@@ -127,8 +134,7 @@ class RecordConditionSerializer(serializers.ModelSerializer):
 class RecordSerializer(serializers.ModelSerializer):
 
     user = UserRecordSerializer(many=False)
-    # artist = serializers.CharField()
-    # album = serializers.CharField()
+    genre = RecordGenreSerializer(many=True)
     condition = RecordConditionSerializer(many=False)
     yearReleased = serializers.IntegerField(source="year_released")
     imageUrl = serializers.CharField(source="image_url")
@@ -142,5 +148,6 @@ class RecordSerializer(serializers.ModelSerializer):
             "yearReleased",
             "imageUrl",
             "condition",
+            "genre",
             "user",
         )
