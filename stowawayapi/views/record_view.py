@@ -18,12 +18,9 @@ class RecordView(ViewSet):
         user = request.auth.user
         condition = Condition.objects.get(pk=request.data["condition"])
         genres = []
-        for genre_id in request.data["categories"]:
+        for genre_id in request.data["genres"]:
             genre = Genre.objects.get(pk=genre_id)
             genres.append(genre)
-
-        # genre_ids = request.data.get("genres", [])
-        # genres = Genre.objects.filter(pk__in=genre_ids)
 
         record = Record()
         record.artist = request.data["artist"]
@@ -56,7 +53,7 @@ class RecordView(ViewSet):
         try:
             user = request.auth.user
             record = Record.objects.get(pk=pk)
-            condition = Condition.objects.get(pk=pk)
+            condition = Condition.objects.get(pk=request.data["condition"])
             genres = []
             for genre_id in request.data["genres"]:
                 genre = Genre.objects.get(pk=genre_id)
@@ -68,7 +65,7 @@ class RecordView(ViewSet):
             record.condition = condition
             record.user = user
             record.save()
-            record.genres.set(genre)
+            record.genres.set(genres)
 
         except Record.DoesNotExist:
             return Response(None, status=status.HTTP_404_NOT_FOUND)
@@ -84,7 +81,15 @@ class RecordView(ViewSet):
             Response -- JSON serialized array
         """
         try:
-            records = Record.objects.all()
+            # Check if a user ID is provided in the query parameters
+            user_id = request.query_params.get("user_id")
+
+            if user_id:
+                # Filter records by user ID
+                records = Record.objects.filter(user_id=user_id)
+            else:
+                # Retrieve all records
+                records = Record.objects.all()
             serializer = RecordSerializer(records, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Exception as ex:
@@ -122,7 +127,7 @@ class UserRecordSerializer(serializers.ModelSerializer):
 class RecordGenreSerializer(serializers.ModelSerializer):
     class Meta:
         model = Genre
-        fields = "name"
+        fields = ("id", "name")
 
 
 class RecordConditionSerializer(serializers.ModelSerializer):
@@ -134,7 +139,7 @@ class RecordConditionSerializer(serializers.ModelSerializer):
 class RecordSerializer(serializers.ModelSerializer):
 
     user = UserRecordSerializer(many=False)
-    genre = RecordGenreSerializer(many=True)
+    genres = RecordGenreSerializer(many=True)
     condition = RecordConditionSerializer(many=False)
     yearReleased = serializers.IntegerField(source="year_released")
     imageUrl = serializers.CharField(source="image_url")
@@ -148,6 +153,6 @@ class RecordSerializer(serializers.ModelSerializer):
             "yearReleased",
             "imageUrl",
             "condition",
-            "genre",
+            "genres",
             "user",
         )
