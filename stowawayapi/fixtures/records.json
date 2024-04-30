@@ -6,7 +6,7 @@
       "artist": "The Clash",
       "album": "London Calling",
       "year_released": 1979,
-      "image_url": "the_clash_london_calling.jpg",
+      "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPYsnOiMnysyvj7VvBx6wloY3-qoX8hOwFXg2AwGM2yw&s",
       "user": 1
     }
   },
@@ -17,7 +17,7 @@
       "artist": "Black Flag",
       "album": "Damaged",
       "year_released": 1981,
-      "image_url": "black_flag_damaged.jpg",
+      "image_url": "https://www.roundflat.com/wp-content/uploads/2022/11/Black-Flag-%E2%80%93-Damaged.jpg",
       "user": 2
     }
   },
