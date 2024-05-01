@@ -28,7 +28,7 @@
       "artist": "Kendrick Lamar",
       "album": "To Pimp a Butterfly",
       "year_released": 2015,
-      "image_url": "kendrick_lamar_to_pimp_a_butterfly.jpg",
+      "image_url": "https://i.guim.co.uk/img/static/sys-images/Guardian/Pix/pictures/2015/3/11/1426099817173/f1efb3f4-9a6d-4f78-8ca8-594ab646d198-bestSizeAvailable.jpeg?width=465&dpr=1&s=none",
       "user": 3
     }
   },
@@ -39,7 +39,7 @@
       "artist": "Metallica",
       "album": "Master of Puppets",
       "year_released": 1986,
-      "image_url": "metallica_master_of_puppets.jpg",
+      "image_url": "https://www.revolvermag.com/sites/default/files/styles/original_image__844px_x_473px_/public/media/section-media/master_cover.jpg?itok=L1JgJGah&timestamp=1508341064",
       "user": 4
     }
   },
@@ -50,7 +50,7 @@
       "artist": "Ramones",
       "album": "Ramones",
       "year_released": 1976,
-      "image_url": "ramones_ramones.jpg",
+      "image_url": "https://glennhorowitz.com/wp-content/uploads/2019/06/Ramones1_2.jpg",
       "user": 5
     }
   },
@@ -61,7 +61,7 @@
       "artist": "Minor Threat",
       "album": "Out of Step",
       "year_released": 1983,
-      "image_url": "minor_threat_out_of_step.jpg",
+      "image_url": "https://upload.wikimedia.org/wikipedia/en/2/2c/Minor_Threat_-_Out_of_Step.jpg",
       "user": 6
     }
   },
@@ -72,7 +72,7 @@
       "artist": "Nas",
       "album": "Illmatic",
       "year_released": 1994,
-      "image_url": "nas_illmatic.jpg",
+      "image_url": "https://upload.wikimedia.org/wikipedia/en/2/27/IllmaticNas.jpg",
       "user": 5
     }
   },
@@ -83,7 +83,7 @@
       "artist": "Iron Maiden",
       "album": "The Number of the Beast",
       "year_released": 1982,
-      "image_url": "iron_maiden_the_number_of_the_beast.jpg",
+      "image_url": "https://upload.wikimedia.org/wikipedia/en/thumb/3/32/IronMaiden_NumberOfBeast.jpg/220px-IronMaiden_NumberOfBeast.jpg",
       "user": 4
     }
   },
@@ -94,7 +94,7 @@
       "artist": "Sex Pistols",
       "album": "Never Mind the Bollocks, Here's the Sex Pistols",
       "year_released": 1977,
-      "image_url": "sex_pistols_never_mind_the_bollocks.jpg",
+      "image_url": "https://upload.wikimedia.org/wikipedia/en/4/4c/Never_Mind_the_Bollocks%2C_Here%27s_the_Sex_Pistols.png",
       "user": 3
     }
   },
@@ -105,7 +105,7 @@
       "artist": "Bad Brains",
       "album": "Bad Brains",
       "year_released": 1982,
-      "image_url": "bad_brains_bad_brains.jpg",
+      "image_url": "https://upload.wikimedia.org/wikipedia/en/5/58/Bad_Brains_debut.jpg",
       "user": 2
     }
   }
