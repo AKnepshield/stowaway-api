@@ -63,6 +63,7 @@ class RecordView(ViewSet):
             record.album = request.data["album"]
             record.year_released = request.data["yearReleased"]
             record.condition = condition
+            record.image_url = request.data["imageUrl"]
             record.user = user
             record.save()
             record.genres.set(genres)
