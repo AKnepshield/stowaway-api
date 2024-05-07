@@ -1,4 +1,5 @@
-from django.http import HttpResponseServerError
+from django.http import HttpResponseServerError, JsonResponse
+from django.shortcuts import get_object_or_404
 from rest_framework import serializers, status
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
@@ -6,6 +7,8 @@ from stowawayapi.models import Record
 from stowawayapi.models import Genre
 from stowawayapi.models import Condition
 from django.contrib.auth.models import User
+
+from stowawayapi.models.like import Like
 
 
 class RecordView(ViewSet):
@@ -114,6 +117,15 @@ class RecordView(ViewSet):
             return Response(
                 {"message": ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+
+    def like_record(request, record_id):
+        record = get_object_or_404(Record, pk=record_id)
+        user = request.user
+
+        if Like.objects.filter(user=user, record=record).exists():
+            return JsonResponse({"error": "You have already liked this record"})
+        like = Like.objects.create(user=user, record=record)
+        return JsonResponse({"mesage": "Record liked successfully"})
 
 
 class UserRecordSerializer(serializers.ModelSerializer):
