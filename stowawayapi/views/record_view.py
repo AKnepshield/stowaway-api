@@ -7,8 +7,8 @@ from stowawayapi.models import Record
 from stowawayapi.models import Genre
 from stowawayapi.models import Condition
 from django.contrib.auth.models import User
-
 from stowawayapi.models.like import Like
+from rest_framework.decorators import action
 
 
 class RecordView(ViewSet):
@@ -118,14 +118,42 @@ class RecordView(ViewSet):
                 {"message": ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
-    def like_record(request, record_id):
-        record = get_object_or_404(Record, pk=record_id)
-        user = request.user
+    @action(methods=["post", "delete", "get"], detail=True)
+    def like(self, request, pk=None):
 
-        if Like.objects.filter(user=user, record=record).exists():
-            return JsonResponse({"error": "You have already liked this record"})
-        like = Like.objects.create(user=user, record=record)
-        return JsonResponse({"mesage": "Record liked successfully"})
+        user = get_object_or_404(User, user=request.auth.user)
+        record = get_object_or_404(Record, pk=pk)
+
+        if request.method == "POST":
+            try:
+                existing_like = Like.objects.get(record=record, user=user)
+                return Response(None, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+            except Like.DoesNotExist:
+                like = Like(user=user, record=record)
+                like.save()
+                return Response(None, status=status.HTTP_204_NO_CONTENT)
+
+        if request.method == "GET":
+            existing_like = Like.objects.filter(record=record, user=user).exists()
+            return Response({"liked": existing_like}, status=status.HTTP_200_OK)
+
+        elif request.method == "DELETE":
+            try:
+                like = Like.objects.get(record=record, user=user)
+                like.delete()
+                return Response(None, status=status.HTTP_204_NO_CONTENT)
+            except Like.DoesNotExist:
+                return Response(None, status=status.HTTP_404_NOT_FOUND)
+
+    # @action(detail=True, methods=["post", "get", "delete"])
+    # def like_record(self, request, pk=None):
+    #     record = self.get_object()
+    #     user = request.user
+
+    #     if Like.objects.filter(user=user, record=record).exists():
+    #         return JsonResponse({"error": "You have already liked this record"})
+    #     like = Like.objects.create(user=user, record=record)
+    #     return JsonResponse({"message": "Record liked successfully"})
 
 
 class UserRecordSerializer(serializers.ModelSerializer):

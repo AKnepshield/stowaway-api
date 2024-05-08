@@ -22,4 +22,5 @@ urlpatterns = [
     path("register", register_user),
     path("login", login_user),
     path("current_user", get_current_user),
+    path("records/liked/", RecordView.as_view({"get": "liked"}), name="liked-records"),
 ]
