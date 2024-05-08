@@ -16,11 +16,9 @@ router.register(r"records", RecordView, "record")
 router.register(r"conditions", ConditionView, "condition")
 router.register(r"genres", GenreView, "genre")
 
-
 urlpatterns = [
     path("", include(router.urls)),
     path("register", register_user),
     path("login", login_user),
     path("current_user", get_current_user),
-    path("records/liked/", RecordView.as_view({"get": "liked"}), name="liked-records"),
 ]

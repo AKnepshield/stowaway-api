@@ -120,9 +120,9 @@ class RecordView(ViewSet):
 
     @action(methods=["post", "delete", "get"], detail=True)
     def like(self, request, pk=None):
-
-        user = get_object_or_404(User, user=request.auth.user)
-        record = get_object_or_404(Record, pk=pk)
+        print(request.auth)
+        user = request.auth.user
+        record = Record.objects.get(pk=pk)
 
         if request.method == "POST":
             try:
