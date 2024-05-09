@@ -84,9 +84,13 @@ class RecordView(ViewSet):
         Returns:
             Response -- JSON serialized array
         """
+
+        # How to pass in parameter to show user likes as well as data of unliked records
+
         try:
             # Check if a user ID is provided in the query parameters
             user_id = request.query_params.get("user_id")
+            auth_user = request.auth.user
 
             if user_id:
                 # Filter records by user ID
@@ -94,7 +98,9 @@ class RecordView(ViewSet):
             else:
                 # Retrieve all records
                 records = Record.objects.all()
-            serializer = RecordSerializer(records, many=True)
+            serializer = RecordSerializer(
+                records, many=True, context={"user_id": auth_user.id}
+            )
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Exception as ex:
             return HttpResponseServerError(ex)
@@ -117,6 +123,12 @@ class RecordView(ViewSet):
             return Response(
                 {"message": ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+
+    # def userLikes(self, request, pk=None):
+    #     user = request.auth.user
+    #     likes = Like.objects.get(pk=pk)
+
+    #     return (Like.records)
 
     @action(methods=["post", "delete", "get"], detail=True)
     def like(self, request, pk=None):
@@ -184,6 +196,15 @@ class RecordSerializer(serializers.ModelSerializer):
     condition = RecordConditionSerializer(many=False)
     yearReleased = serializers.IntegerField(source="year_released")
     imageUrl = serializers.CharField(source="image_url")
+    userLiked = serializers.SerializerMethodField("_userLiked")
+
+    def _userLiked(self, obj):
+        user_id = self.context.get("user_id")
+
+        if user_id:
+            return len(Like.objects.filter(record=obj, user=user_id)) > 0
+
+        return False
 
     class Meta:
         model = Record
@@ -196,4 +217,5 @@ class RecordSerializer(serializers.ModelSerializer):
             "condition",
             "genres",
             "user",
+            "userLiked",
         )
