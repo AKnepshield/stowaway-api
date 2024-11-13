@@ -1,111 +1,65 @@
 [
   {
     "pk": 1,
-<<<<<<< HEAD
-    "model": "stowawayapi.genre",
-=======
     "model": "stowaway.genre",
->>>>>>> 1f4c47a (Added genre, condition json fixtures)
     "fields": {
       "name": "Punk"
     }
   },
   {
     "pk": 2,
-<<<<<<< HEAD
-    "model": "stowawayapi.genre",
-=======
     "model": "stowaway.genre",
->>>>>>> 1f4c47a (Added genre, condition json fixtures)
     "fields": {
       "name": "Hardcore Punk"
     }
   },
   {
     "pk": 3,
-<<<<<<< HEAD
-    "model": "stowawayapi.genre",
-=======
     "model": "stowaway.genre",
->>>>>>> 1f4c47a (Added genre, condition json fixtures)
     "fields": {
       "name": "Heavy Metal"
     }
   },
   {
     "pk": 4,
-<<<<<<< HEAD
-    "model": "stowawayapi.genre",
-=======
     "model": "stowaway.genre",
->>>>>>> 1f4c47a (Added genre, condition json fixtures)
     "fields": {
       "name": "Hip Hop"
     }
   },
   {
     "pk": 5,
-<<<<<<< HEAD
-    "model": "stowawayapi.genre",
-=======
     "model": "stowaway.genre",
->>>>>>> 1f4c47a (Added genre, condition json fixtures)
     "fields": {
       "name": "Rock"
     }
   },
   {
     "pk": 6,
-<<<<<<< HEAD
-    "model": "stowawayapi.genre",
-=======
     "model": "stowaway.genre",
->>>>>>> 1f4c47a (Added genre, condition json fixtures)
     "fields": {
       "name": "Synth"
     }
   },
   {
     "pk": 7,
-<<<<<<< HEAD
-    "model": "stowawayapi.genre",
-=======
     "model": "stowaway.genre",
->>>>>>> 1f4c47a (Added genre, condition json fixtures)
     "fields": {
       "name": "Jazz"
     }
   },
   {
     "pk": 8,
-<<<<<<< HEAD
-    "model": "stowawayapi.genre",
-=======
     "model": "stowaway.genre",
->>>>>>> 1f4c47a (Added genre, condition json fixtures)
     "fields": {
       "name": "Reggae"
     }
   },
   {
     "pk": 9,
-<<<<<<< HEAD
-    "model": "stowawayapi.genre",
-    "fields": {
-      "name": "Country"
-    }
-  },
-  {
-    "pk": 10,
-    "model": "stowawayapi.genre",
-    "fields": {
-      "name": "Pop"
-    }
-=======
     "model": "stowaway.genre",
     "fields": {
       "name": "Country"
     }
->>>>>>> 1f4c47a (Added genre, condition json fixtures)
   }
 ]
