@@ -1,4 +1,5 @@
-from django.http import HttpResponseServerError
+from django.http import HttpResponseServerError, JsonResponse
+from django.shortcuts import get_object_or_404
 from rest_framework import serializers, status
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
@@ -6,6 +7,8 @@ from stowawayapi.models import Record
 from stowawayapi.models import Genre
 from stowawayapi.models import Condition
 from django.contrib.auth.models import User
+from stowawayapi.models.like import Like
+from rest_framework.decorators import action
 
 
 class RecordView(ViewSet):
@@ -81,9 +84,13 @@ class RecordView(ViewSet):
         Returns:
             Response -- JSON serialized array
         """
+
+        # How to pass in parameter to show user likes as well as data of unliked records
+
         try:
             # Check if a user ID is provided in the query parameters
             user_id = request.query_params.get("user_id")
+            auth_user = request.auth.user
 
             if user_id:
                 # Filter records by user ID
@@ -91,7 +98,9 @@ class RecordView(ViewSet):
             else:
                 # Retrieve all records
                 records = Record.objects.all()
-            serializer = RecordSerializer(records, many=True)
+            serializer = RecordSerializer(
+                records, many=True, context={"user_id": auth_user.id}
+            )
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Exception as ex:
             return HttpResponseServerError(ex)
@@ -114,6 +123,49 @@ class RecordView(ViewSet):
             return Response(
                 {"message": ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+
+    # def userLikes(self, request, pk=None):
+    #     user = request.auth.user
+    #     likes = Like.objects.get(pk=pk)
+
+    #     return (Like.records)
+
+    @action(methods=["post", "delete", "get"], detail=True)
+    def like(self, request, pk=None):
+        print(request.auth)
+        user = request.auth.user
+        record = Record.objects.get(pk=pk)
+
+        if request.method == "POST":
+            try:
+                existing_like = Like.objects.get(record=record, user=user)
+                return Response(None, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+            except Like.DoesNotExist:
+                like = Like(user=user, record=record)
+                like.save()
+                return Response(None, status=status.HTTP_204_NO_CONTENT)
+
+        if request.method == "GET":
+            existing_like = Like.objects.filter(record=record, user=user).exists()
+            return Response({"liked": existing_like}, status=status.HTTP_200_OK)
+
+        elif request.method == "DELETE":
+            try:
+                like = Like.objects.get(record=record, user=user)
+                like.delete()
+                return Response(None, status=status.HTTP_204_NO_CONTENT)
+            except Like.DoesNotExist:
+                return Response(None, status=status.HTTP_404_NOT_FOUND)
+
+    # @action(detail=True, methods=["post", "get", "delete"])
+    # def like_record(self, request, pk=None):
+    #     record = self.get_object()
+    #     user = request.user
+
+    #     if Like.objects.filter(user=user, record=record).exists():
+    #         return JsonResponse({"error": "You have already liked this record"})
+    #     like = Like.objects.create(user=user, record=record)
+    #     return JsonResponse({"message": "Record liked successfully"})
 
 
 class UserRecordSerializer(serializers.ModelSerializer):
@@ -144,6 +196,15 @@ class RecordSerializer(serializers.ModelSerializer):
     condition = RecordConditionSerializer(many=False)
     yearReleased = serializers.IntegerField(source="year_released")
     imageUrl = serializers.CharField(source="image_url")
+    userLiked = serializers.SerializerMethodField("_userLiked")
+
+    def _userLiked(self, obj):
+        user_id = self.context.get("user_id")
+
+        if user_id:
+            return len(Like.objects.filter(record=obj, user=user_id)) > 0
+
+        return False
 
     class Meta:
         model = Record
@@ -156,4 +217,5 @@ class RecordSerializer(serializers.ModelSerializer):
             "condition",
             "genres",
             "user",
+            "userLiked",
         )

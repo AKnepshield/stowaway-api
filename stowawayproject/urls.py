@@ -16,7 +16,6 @@ router.register(r"records", RecordView, "record")
 router.register(r"conditions", ConditionView, "condition")
 router.register(r"genres", GenreView, "genre")
 
-
 urlpatterns = [
     path("", include(router.urls)),
     path("register", register_user),
