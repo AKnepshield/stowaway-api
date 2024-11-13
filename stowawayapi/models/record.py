@@ -15,8 +15,3 @@ class Record(models.Model):
     genres = models.ManyToManyField(
         "Genre", through="RecordGenre", related_name="records"
     )
-
-    # def clean(self):
-    #     super().clean()
-    #     if not self.genres.exists():
-    #         raise ValidationError("Please choose at least 1 genre")
