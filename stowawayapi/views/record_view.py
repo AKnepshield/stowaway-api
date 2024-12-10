@@ -2,10 +2,12 @@ from django.http import HttpResponseServerError
 from rest_framework import serializers, status
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
+from rest_framework.decorators import action
 from stowawayapi.models import Record
 from stowawayapi.models import Genre
 from stowawayapi.models import Condition
 from django.contrib.auth.models import User
+from stowawayapi.clients.discogs_client import search_discogs
 
 
 class RecordView(ViewSet):
@@ -94,6 +96,23 @@ class RecordView(ViewSet):
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Exception as ex:
             return HttpResponseServerError(ex)
+
+    @action(detail=False, methods=["get"], url_path="search")
+    def search(self, request):
+        query = request.query_params.get("query", None)
+        if not query:
+            return Response(
+                {"error": "A 'query' parameter is required."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        try:
+            discogs_response = search_discogs(query)
+            return Response(discogs_response, status=status.HTTP_200_OK)
+        except Exception as ex:
+            return Response(
+                {"error": f"Failed to fetch data from Discogs: {str(ex)}"},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
 
     def destroy(self, request, pk=None):
         """Handle DELETE requests for a single item
