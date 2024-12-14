@@ -175,3 +175,11 @@ class RecordSerializer(serializers.ModelSerializer):
             "genres",
             "user",
         )
+
+
+# Model for return:
+
+# record = [
+#     {"artist": "Misfits", "album": "Static Age", "year_released": "1980", "genres": ["punk"]},
+#     {"artist": "High Vis", "album": "Blending", "year_released": null, "genres": []}
+# ]
